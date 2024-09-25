@@ -1,7 +1,8 @@
 {
   "name": "@rck.princy/ra-data-provider-wrapper",
+  "private": false,
   "version": "0.0.1",
-  "description": "ra-data-provider-wrapper makes defining data providers in React Admin easy",
+  "description": "@rck.princy/ra-data-provider-wrapper makes defining data providers in React Admin easy",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
