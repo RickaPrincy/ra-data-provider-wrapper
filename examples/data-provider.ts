@@ -3,7 +3,7 @@ import { createRaProvider } from '../src/wrapper';
 import { dummyProvider } from './dummy-provider';
 
 export const raDataProvider: DataProvider = createRaProvider([dummyProvider], {
-  getListPageInfo: async (_resource, _raGetListParams) => {
+  getListPageInfo: async ({ resource: _resource }) => {
     return Promise.resolve({
       pageInfo: {
         hasNextPage: true,

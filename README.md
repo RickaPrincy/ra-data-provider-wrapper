@@ -3,6 +3,7 @@
 A wrapper for [React Admin](https://github.com/marmelab/react-admin) `DataProvider` that simplifies the integration of multiple ResourceProvider instances (one facade DataProvider).
 
 ### Features :collision:
+
 - Facade Provider: Automatically manages multiple `ResourceProviders`.
 - Error Handling: Throws errors for unknown resource names and unimplemented functions
 

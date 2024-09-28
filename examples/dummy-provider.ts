@@ -25,5 +25,9 @@ export const dummyProvider: ResourceProvider<Dummy> = {
     //some api calls
     return Promise.resolve([]);
   },
+  saveOrUpdate: async ({ meta }) => {
+    console.log(meta?.muationType === 'UPDATE');
+    return null as any;
+  },
   //others
 };
