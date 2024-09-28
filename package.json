@@ -1,7 +1,7 @@
 {
   "name": "@rck.princy/ra-data-provider-wrapper",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "@rck.princy/ra-data-provider-wrapper makes defining data providers in React Admin easy",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -42,9 +42,9 @@
   },
   "homepage": "https://github.com/RickaPrincy/ra-data-provider-wrapper#readme",
   "peerDependencies": {
-    "react": "^18.3.1",
-    "react-admin": "^5.1.5",
-    "react-dom": "^18.3.1"
+    "react": "^18.0.0",
+    "react-admin": "^5.0.0",
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
     "@swc/core": "^1.7.26",

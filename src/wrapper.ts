@@ -2,6 +2,7 @@ import {
   DataProvider,
   GetListParams,
   GetListResult,
+  PaginationPayload,
   QueryFunctionContext,
   RaRecord,
 } from 'react-admin';
@@ -47,17 +48,26 @@ const getProviderFn = <Fn extends keyof ResourceProvider>(
   return (providerValue as Required<ResourceProvider<RaRecord>>)[fn];
 };
 
-export const createRaProvider = (
-  providers: ResourceProvider[],
-  options: {
-    supportAbortSignal?: DataProvider['supportAbortSignal'];
-    getListPageInfo: (args: {
+export type CreateRaProviderOptions = {
+  supportAbortSignal?: DataProvider['supportAbortSignal'];
+  getListOptions: {
+    defaultPagination?: PaginationPayload;
+    getPageInfo: (args: {
       resource: string;
-      getListParams: GetListParams & QueryFunctionContext;
+      getListParams: Omit<GetListParams, 'pagination'> &
+        QueryFunctionContext & { pagination: PaginationPayload };
       currentProvider: ResourceProvider<any>;
     }) => Promise<Omit<GetListResult, 'data'>>;
-  }
+  };
+};
+
+export const createRaProvider = (
+  providers: ResourceProvider[],
+  options: CreateRaProviderOptions
 ): DataProvider => {
+  const { defaultPagination = { perPage: 10, page: 1 } } =
+    options.getListOptions;
+
   return {
     supportAbortSignal: options.supportAbortSignal,
     getManyReference: (resource, raParams) => {
@@ -112,9 +122,12 @@ export const createRaProvider = (
     },
     getList: async (resource, raParams) => {
       const providerValue = getProvider({ providers, resource });
-      const { total, pageInfo } = await options.getListPageInfo({
+      const { total, pageInfo } = await options.getListOptions.getPageInfo({
         resource,
-        getListParams: raParams,
+        getListParams: {
+          ...raParams,
+          pagination: raParams.pagination ?? defaultPagination,
+        },
         currentProvider: providerValue,
       });
 
@@ -122,7 +135,11 @@ export const createRaProvider = (
         throw new Error(`getList is not implemented for ${resource}`);
       }
 
-      const data = await providerValue.getList(raParams);
+      const data = await providerValue.getList({
+        ...raParams,
+        pagination: raParams.pagination ?? defaultPagination,
+      });
+
       return Promise.resolve({
         data,
         total,

@@ -10,6 +10,7 @@ import {
   RaRecord,
   UpdateManyParams,
   UpdateParams,
+  PaginationPayload,
 } from 'react-admin';
 
 type WithMeta<T> = { meta?: T };
@@ -21,7 +22,7 @@ export type RequiredResourceName = {
 };
 
 export type MutationMetaType<Type extends MutationType> = {
-  muationType: Type;
+  mutationType: Type;
 };
 
 export type DeleteAllArgsType<
@@ -40,9 +41,10 @@ export type GetOneArgsType<
 export type GetListArgsType<
   Filter extends Dict = any,
   Meta extends Dict = any,
-> = Omit<GetListParams & QueryFunctionContext, 'meta'> &
+> = Omit<GetListParams & QueryFunctionContext, 'meta' | 'pagination'> &
   WithMeta<Meta> & {
     filter?: Filter;
+    pagination: PaginationPayload;
   };
 
 type CreateArgsType<

@@ -58,19 +58,26 @@ import { dummyProvider } from './dummy-provider';
 import { personProvider } from './person-provider';
 
 export const raDataProvider = createRaProvider(
-  [dummyProvider, personProvider],
+  [personProvider, dummyProvider],
   {
-    getListPageInfo: async (_resource, _raGetListParams) => {
-      return Promise.resolve({
-        pageInfo: {
-          hasNextPage: true,
-          hasPreviousPage: false,
-        },
-      });
-    },
+    getListOptions: {
+      defaultPagination: { page: 1, perPage: 5 };
+      getPageInfo: async (args) => {
+        return Promise.resolve({
+          pageInfo: {
+            hasNextPage: true,
+            hasPreviousPage: false,
+          },
+        });
+      },
+    }
   }
 );
 ```
+
+### Examples
+
+[Examples](https://github.com/RickaPrincy/ra-data-provider-wrapper/tree/main/examples)
 
 ### License
 
